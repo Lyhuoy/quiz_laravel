@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Author;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Resources\AuthorResource;
+use App\Models\Book;
 
 class AuthorController extends Controller
 {
@@ -15,7 +16,7 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        return Author::with(['book'])->get()->take(3);
+        return AuthorResource::collection(Author::all());
     }
 
     /**
@@ -48,7 +49,7 @@ class AuthorController extends Controller
      */
     public function show($id)
     {
-        return Author::findOrFail($id);
+        return new AuthorResource(Author::findOrFail($id));
     }
 
     /**
